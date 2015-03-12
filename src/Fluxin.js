@@ -2,6 +2,11 @@ var React = require('react');
 var F = require('f-js').F;
 var assign = Object.assign || require('object.assign');
 
+module.exports = {
+    createModel: createModel,
+    createView: createView,
+    createIntent: createIntent
+};
 
 function createView(Model, Intent, options) {
     if (!options.hasOwnProperty('mixins')) {
@@ -92,12 +97,6 @@ function createIntent(options) {
 
     return Intent;
 }
-
-module.exports = {
-    createModel: createModel,
-    createView: createView,
-    createIntent: createIntent
-};
 
 function createComponent(options, defaultOptions) {
     var workingOptions = assign({}, defaultOptions, options);
