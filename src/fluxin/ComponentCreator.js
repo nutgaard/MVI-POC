@@ -15,6 +15,7 @@ function createComponent(options, defaultOptions) {
 
     Component.prototype.getOutput = StreamHelpers.getOutput;
     Component.prototype.push = StreamHelpers.push;
+    Component.prototype.listenTo = StreamHelpers.listenTo;
 
     for (option in workingOptions) {
         Component.prototype[option] = workingOptions[option];

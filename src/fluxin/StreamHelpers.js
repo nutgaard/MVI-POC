@@ -19,10 +19,15 @@ function namedEvent(name) {
         });
     }.bind(this);
 }
+function listenTo(component) {
+    component.getOutput().then(this.handleEvent);
+}
+
 var StreamHelpers = {
     getOutput: getOutput,
     push: push,
-    namedEvent: namedEvent
+    namedEvent: namedEvent,
+    listenTo: listenTo
 };
 
 module.exports = StreamHelpers;

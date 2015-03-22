@@ -30,6 +30,14 @@ function createFor(Model, Intent) {
             //Creates a named eventhandler, should be used for creating events intended for the intent.
             this.namedEvent = StreamHelpers.namedEvent.bind(this);
 
+            //Creates the shorthand listenTo
+            this.listenTo = StreamHelpers.listenTo.bind(this);
+
+            //Creates handleEvent so every component keeps a similar interface
+            this.handleEvent = function(){
+                this.setState.apply(this, arguments);
+            }.bind(this);
+
             //3b. Creation of View stream and connection to Intent handler
             this.getOutput().then(this.fluxin.intent.handleEvent.bind(this.fluxin.intent));
 
@@ -37,9 +45,7 @@ function createFor(Model, Intent) {
             this.fluxin.intent.getOutput().then(this.fluxin.model.handleEvent.bind(this.fluxin.model));
 
             //5. Creation of Model stream and connection to View handler
-            this.fluxin.model.getOutput().then(function () {
-                this.setState.apply(this, arguments);
-            }.bind(this));
+            this.fluxin.model.getOutput().then(this.handleEvent);
 
             //6. Retrieve initial state from model
             var initialModalState = this.fluxin.model.getInitialData(this.props);
