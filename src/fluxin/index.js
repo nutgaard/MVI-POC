@@ -55,8 +55,8 @@ function createModel(options) {
 }
 
 function createIntent(options) {
-    var defaultOptions = {};
-    var Intent = ComponentCreator.create(options, defaultOptions);
+    var Intent = ComponentCreator.create(options, {});
+
     Intent.prototype.pushNamed = function (name, payload) {
         StreamHelpers.namedEvent.bind(this)(name)(payload);
     };

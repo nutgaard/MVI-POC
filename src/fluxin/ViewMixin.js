@@ -33,8 +33,8 @@ function createFor(Model, Intent) {
             //Creates the shorthand listenTo
             this.listenTo = StreamHelpers.listenTo.bind(this);
 
-            //Creates handleEvent so every component keeps a similar interface
-            this.handleEvent = function(){
+            //Creates handleEvent, if not present, so every component keeps a similar interface
+            this.handleEvent = this.handleEvent || function () {
                 this.setState.apply(this, arguments);
             }.bind(this);
 
