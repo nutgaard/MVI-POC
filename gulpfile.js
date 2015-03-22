@@ -5,9 +5,12 @@ var watchify = require('watchify');
 var notify = require('gulp-notify');
 var source = require('vinyl-source-stream');
 var globalShim = require('browserify-global-shim');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
+
 var config = require('./buildConfig.json');
 var Utils = require('./buildUtils.js');
-var concat = require('gulp-concat');
 
 
 function build(isDev, fileConfig) {
@@ -54,6 +57,15 @@ function createFJSFile() {
 
 }
 
+function uglifyTask(componentName) {
+    var file = config.distPath + '/' + componentName + '.js';
+    console.log('Uglifying ', file);
+    gulp.src(file)
+        .pipe(uglify())
+        .pipe(rename(componentName + '.min.js'))
+        .pipe(gulp.dest(config.distPath));
+}
+
 gulp.task('dev', function () {
     createFJSFile();
     config.components
@@ -66,4 +78,8 @@ gulp.task('default', function () {
     config.components
         .map(Utils.createComponentConfig.bind(this, config.srcPath, config.namespace.components))
         .forEach(build.bind(this, false));
+
+    config.components
+        .map(Utils.capitalize)
+        .map(uglifyTask);
 });
