@@ -1,4 +1,4 @@
-var Fluxin = require('./../Fluxin');
+var Fluxin = require('fluxin');
 var IntentActions = require('./Action').intentActions;
 
 module.exports = Fluxin.createModel({
@@ -17,7 +17,7 @@ module.exports = Fluxin.createModel({
 
         return routes;
     },
-    addText: function (text) { //argument is the payload of the event. Push will update the initial state of the model, as well as pushing the update to the output stream
+    addText: function (text) { //argument is the payload of the event. setState will update the initial state of the model, as well as pushing the update to the output stream
         this.setState({
             text: this.state.text + text
         });

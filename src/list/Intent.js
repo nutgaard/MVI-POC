@@ -1,4 +1,4 @@
-var Fluxin = require('./../Fluxin');
+var Fluxin = require('fluxin');
 var Actions = require('./Action');
 
 module.exports = Fluxin.createIntent({

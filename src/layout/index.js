@@ -17,12 +17,12 @@ var Layout = React.createClass({
             <div>
                 <div className="base one">
                     <h1>One</h1>
-                    <List ref="oneone"/>
+                    <List ref="oneone" header="Header1" />
                     <List ref="onetwo"/>
                 </div>
                 <div className="base two">
                     <h1>Two</h1>
-                    <List ref="twoone"/>
+                    <List ref="twoone" header="Header2" />
                     <List ref="twotwo"/>
                 </div>
             </div>
