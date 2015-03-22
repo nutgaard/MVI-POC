@@ -7,6 +7,7 @@ var source = require('vinyl-source-stream');
 var globalShim = require('browserify-global-shim');
 var config = require('./buildConfig.json');
 var Utils = require('./buildUtils.js');
+var concat = require('gulp-concat');
 
 
 function build(isDev, fileConfig) {
@@ -44,7 +45,20 @@ function build(isDev, fileConfig) {
     return rebundle();
 }
 
+function createFJSFile() {
+    var location = './node_modules/f-js/lib/';
+    var files = ['promises.js', 'P.js', 'F.js', 'F.stream.js', 'exports.js'].map(function (file) {
+        return location + file;
+    });
+    console.log('Creating F-js file of ', files, config.srcPath);
+    return gulp.src(files)
+        .pipe(concat('index.js'))
+        .pipe(gulp.dest(config.srcPath+'f-js/'));
+
+}
+
 gulp.task('dev', function () {
+    createFJSFile();
     build(true, {
         file: config.srcPath + "react.js",
         namespace: config.namespace.base,
@@ -54,9 +68,10 @@ gulp.task('dev', function () {
     config.components
         .map(Utils.createComponentConfig.bind(this, config.srcPath, config.namespace.components))
         .forEach(build.bind(this, true));
-})
+});
 
 gulp.task('default', function () {
+    createFJSFile();
     build(false, {
         file: config.srcPath + "react.js",
         namespace: config.namespace.base,

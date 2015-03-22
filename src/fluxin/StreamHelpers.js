@@ -1,4 +1,4 @@
-var F = require('f-js').F;
+var F = require('F-js').F;
 
 function getOutput() {
     this.fluxin = this.fluxin || {};
