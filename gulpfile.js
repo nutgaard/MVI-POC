@@ -37,7 +37,7 @@ function build(isDev, fileConfig) {
 
     bundler.on('update', function () {
         var start = new Date();
-        console.log('Rebundling...');
+        console.log('Rebundling ', fileConfig.name);
         rebundle();
         console.log('Rebundled in ' + (new Date() - start) + 'ms');
     });
