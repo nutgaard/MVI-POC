@@ -6,7 +6,6 @@
     "components": ""
   },
   "components": [
-    "f-js",
     "fluxin",
     "list",
     "layout"

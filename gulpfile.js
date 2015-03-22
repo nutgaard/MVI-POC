@@ -19,11 +19,8 @@ function build(isDev, fileConfig) {
 
     var bundler = isDev ? watchify(browserify(props)) : browserify(props);
     bundler.transform(reactify);
-
-    if (fileConfig.name !== 'react') {
-        bundler.transform(globalShim.configure(Utils.createGlobalShimConfig(fileConfig, config)));
-        bundler.ignore('react');
-    }
+    bundler.transform(globalShim.configure(Utils.createGlobalShimConfig(fileConfig, config)));
+    bundler.ignore('react');
 
     function rebundle() {
         var stream = bundler.bundle();
@@ -53,18 +50,12 @@ function createFJSFile() {
     console.log('Creating F-js file of ', files, config.srcPath);
     return gulp.src(files)
         .pipe(concat('index.js'))
-        .pipe(gulp.dest(config.srcPath+'f-js/'));
+        .pipe(gulp.dest(config.srcPath + 'f-js/'));
 
 }
 
 gulp.task('dev', function () {
     createFJSFile();
-    build(true, {
-        file: config.srcPath + "react.js",
-        namespace: config.namespace.base,
-        name: "react",
-        standaloneName: Utils.createStandaloneName(config.namespace.base, "react")
-    });
     config.components
         .map(Utils.createComponentConfig.bind(this, config.srcPath, config.namespace.components))
         .forEach(build.bind(this, true));
@@ -72,12 +63,6 @@ gulp.task('dev', function () {
 
 gulp.task('default', function () {
     createFJSFile();
-    build(false, {
-        file: config.srcPath + "react.js",
-        namespace: config.namespace.base,
-        name: "react",
-        standaloneName: Utils.createStandaloneName(config.namespace.base, "react")
-    });
     config.components
         .map(Utils.createComponentConfig.bind(this, config.srcPath, config.namespace.components))
         .forEach(build.bind(this, false));

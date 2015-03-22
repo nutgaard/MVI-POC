@@ -1,8 +1,8 @@
-var React = require('react');
+var Fluxin = require('fluxin');
 var List = require('list');
 
 
-var Layout = React.createClass({
+var Layout = Fluxin.createClass({
     componentDidMount: function(){
         var oo = this.refs.oneone;
         var ot = this.refs.onetwo;
