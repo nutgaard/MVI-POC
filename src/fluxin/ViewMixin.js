@@ -2,7 +2,7 @@ var StreamHelpers = require('./StreamHelpers');
 
 function createFor(Model, Intent) {
     return {
-        componentWillMount: function () {
+        getInitialState: function () {
             //0. Part of init View
             //Creating and maintained some information about Model and Intent
             this.fluxin = {};
@@ -48,9 +48,10 @@ function createFor(Model, Intent) {
             this.fluxin.model.getOutput().then(this.handleEvent);
 
             //6. Retrieve initial state from model
-            var initialModalState = this.fluxin.model.getInitialData(this.props);
-            this.fluxin.model.state = initialModalState || {};
-            this.setState(initialModalState);
+            var initialModelState = this.fluxin.model.getInitialData(this.props);
+            this.fluxin.model.state = initialModelState || {};
+
+            return initialModelState;
         }
     };
 }
