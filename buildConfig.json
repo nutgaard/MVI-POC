@@ -8,6 +8,7 @@
   "components": [
     "fluxin",
     "list",
-    "layout"
+    "layout",
+    "layoutFlux"
   ]
 }

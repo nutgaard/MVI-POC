@@ -10,9 +10,15 @@
 <script type="application/javascript" src="../dist/Fluxin.js"></script>
 <script type="application/javascript" src="../dist/List.js"></script>
 <script type="application/javascript" src="../dist/Layout.js"></script>
+<script type="application/javascript" src="../dist/LayoutFlux.js"></script>
 <body>
+<div id="fluxin"></div>
+<div id="flux1"></div>
+<div id="flux2"></div>
 <script type="text/jsx">
-    Fluxin.render(<Layout />, document.body);
+    Fluxin.render(<Layout />, document.getElementById('fluxin'));
+    Fluxin.render(<LayoutFlux />, document.getElementById('flux1'));
+    Fluxin.render(<LayoutFlux />, document.getElementById('flux2'));
 </script>
 </body>
 </html>
