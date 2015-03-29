@@ -5,28 +5,18 @@ var StreamHelpers = require('./StreamHelpers');
 var ComponentCreator = require('./ComponentCreator');
 var ViewMixin = require('./ViewMixin');
 
-module.exports = {
+var Fluxin = {
     createModel: createModel,
     createView: createView,
-    createIntent: createIntent,
-
-    //React Top-Level API
-    Component: React.Component,
-    createClass: React.createClass,
-    createElement: React.createElement,
-    cloneElement: React.cloneElement,
-    createFactory: React.createFactory,
-    render: React.render,
-    unmountComponentAtNode: React.unmountComponentAtNode,
-    renderToString: React.renderToString,
-    renderToStaticMarkup: React.renderToStaticMarkup,
-    isValidElement: React.isValidElement,
-    findDOMNode: React.findDOMNode,
-    DOM: React.DOM,
-    PropTypes: React.PropTypes,
-    initializeTouchEvents: React.initializeTouchEvents,
-    Children: React.Children
+    createIntent: createIntent
 };
+for (var prop in React) {
+    if (React.hasOwnProperty(prop)) {
+        Fluxin[prop] = React[prop];
+    }
+}
+
+module.exports = Fluxin;
 
 function createView(Model, Intent, options) {
     if (!options.hasOwnProperty('mixins')) {
