@@ -6,7 +6,7 @@ function createComponent(options, defaultOptions) {
 
     function Component() {
         if (!this.getEventRouter) {
-            console.error(this.__proto__, 'did not define a event router.');
+            console.error(Object.getPrototypeOf(this), 'did not define a event router.');
             throw "Components must define a function #getEventRouter() returning the event routes.";
         }
 
@@ -30,7 +30,7 @@ function createEventHandler() {
     };
 
     this.handleEvent = function (event) {
-        (routes[event.name] || dummy).bind(this)(event.payload);
+        (routes[event.name] || dummy).apply(this, event.payload);
     }.bind(this);
 }
 

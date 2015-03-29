@@ -8,8 +8,8 @@ var Intent = Fluxin.createIntent({
 
         return routes;
     },
-    update: function(event){
-        this.pushNamed('buttonClick', 'ThePayload');
+    update: function(){
+        this.pushNamed('buttonClick', 'ThePayload', 'Arg2', 'Arg3');
     }
 });
 

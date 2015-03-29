@@ -57,8 +57,8 @@ function createModel(options) {
 function createIntent(options) {
     var Intent = ComponentCreator.create(options, {});
 
-    Intent.prototype.pushNamed = function (name, payload) {
-        StreamHelpers.namedEvent.bind(this)(name)(payload);
+    Intent.prototype.pushNamed = function () {
+        StreamHelpers.namedEvent.apply(this, arguments)();
     };
 
     return Intent;

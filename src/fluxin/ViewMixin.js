@@ -42,13 +42,13 @@ function createFor(Model, Intent) {
             }.bind(this);
 
             //3b. Creation of View stream and connection to Intent handler
-            this.getOutput().then(this.fluxin.intent.handleEvent.bind(this.fluxin.intent));
+            this.fluxin.intent.listenTo(this);
 
             //4. Creation of Intent stream and connection to Modal handler
-            this.fluxin.intent.getOutput().then(this.fluxin.model.handleEvent.bind(this.fluxin.model));
+            this.fluxin.model.listenTo(this.fluxin.intent);
 
             //5. Creation of Model stream and connection to View handler
-            this.fluxin.model.getOutput().then(this.handleEvent);
+            this.listenTo(this.fluxin.model);
 
             //6. Retrieve initial state from model
             var initialModelState = this.fluxin.model.getInitialData(this.props);

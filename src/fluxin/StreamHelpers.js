@@ -12,15 +12,36 @@ function push() {
     this.getOutput().push.apply(this.getOutput(), arguments);
 }
 function namedEvent(name) {
-    return function (event) {
+    var extraArgs = Array.prototype.slice.call(arguments, 1);
+
+    return function (rawPayload) {
+        var payload = [];
+        if (rawPayload) {
+            payload.push(rawPayload);
+        }
+        payload = payload.concat(extraArgs);
+
         this.push({
             name: name,
-            payload: event
+            payload: payload
         });
     }.bind(this);
 }
-function listenTo(component) {
-    component.getOutput().then(this.handleEvent);
+function listenTo(component, assertUnique) {
+    this.fluxin = this.fluxin || {};
+    this.fluxin.streamBinding = this.fluxin.streamBinding || [];
+
+    var enforceUnique = true;
+    if (assertUnique === false) {
+        enforceUnique = assertUnique;
+    }
+
+    var stream = component.getOutput();
+    if (enforceUnique && this.fluxin.streamBinding.indexOf(stream) !== -1) {
+        return;
+    }
+    stream.then(this.handleEvent);
+    this.fluxin.streamBinding.push(stream);
 }
 
 var StreamHelpers = {
