@@ -5,9 +5,12 @@ function createFor(Model, Intent) {
         getInitialState: function () {
             //0. Part of init View
             //Creating and maintained some information about Model and Intent
+            var ModelTypeInstance = getTypeInstance(Model);
+            var IntentTypeInstance = getTypeInstance(Intent);
+
             this.fluxin = {};
-            this.fluxin.Model = Model;
-            this.fluxin.Intent = Intent;
+            this.fluxin.Model = ModelTypeInstance.type;
+            this.fluxin.Intent = IntentTypeInstance.type;
 
             //Setup displaynames for the Intent and Model Component is a displayName was given.
             var prefix = this.constructor.displayName || '';
@@ -15,10 +18,10 @@ function createFor(Model, Intent) {
             this.fluxin.Model.displayName = prefix + 'Model';
 
             //The initialized model and intent
-            //1. Init Intent
-            this.fluxin.intent = new Intent();
             //2. Init Model
-            this.fluxin.model = new Model();
+            this.fluxin.model = ModelTypeInstance.instance || new Model();
+            //1. Init Intent
+            this.fluxin.intent = IntentTypeInstance.instance || new Intent();
 
             //3a. Creating View stream
             //The output stream from the view. This stream is consumed by the intent.
@@ -55,6 +58,23 @@ function createFor(Model, Intent) {
         }
     };
 }
+function getTypeInstance(component) {
+    if (typeof component === 'function') {
+        return {
+            type: component,
+            instance: undefined
+        };
+    } else if (typeof component === 'object') {
+        return {
+            type: component.constructor,
+            instance: component
+        };
+    } else {
+        throw "Unrecognized type of component: " + (typeof component) + ":::" + component;
+    }
+}
+
+
 var ViewMixin = {
     createFor: createFor
 };
